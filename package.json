@@ -1,0 +1,15 @@
+{
+  "name": "pinizza",
+  "version": "0.0.1",
+  "description": "zurb panini + a little pizza flavor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "iStuffs - Samuel DIDIER-LAURENT",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "panini": "^1.6.2"
+  }
+}
