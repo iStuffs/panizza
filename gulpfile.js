@@ -9,10 +9,10 @@ var PATH = {
 PATH.panini = {
   src:      PATH.src + 'pages/**/*.html',
   root:     PATH.src + 'pages/',
-  layouts:  PATH.src + 'root/layouts/',
-  partials: PATH.src + 'root/partials/',
-  helpers:  PATH.src + 'root/helpers/',
-  data:     PATH.src + 'root/data/',
+  layouts:  PATH.src + 'layouts/',
+  partials: PATH.src + 'partials/',
+  helpers:  PATH.src + 'helpers/',
+  data:     PATH.src + 'data/',
 }
 
 PATH.css = {
