@@ -1,9 +1,8 @@
 /*  Resets. Ex: boostrap-reboot, normalize.css ...
     ========================================================================= */
 
-// @import '../../../../node_modules/bootstrap/scss/bootstrap-reboot'
-// @import '../../../../node_modules/sassy-normalize/normalize'
-// @import 'normalize';
+@import 'normalize';
+// @import 'bootstrap-reboot';
 
 html{
     width      : 100%;

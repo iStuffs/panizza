@@ -11,10 +11,9 @@ const sourcemaps      = require('gulp-sourcemaps');
 const path            = require('path');
 const bourbon         = require("bourbon").includePaths;
 const animate         = path.join(__dirname, 'node_modules/animate.css/source');
-// var animate         = require("animate.css").includePaths;
-
-// var normalize       = require("sassy-normalize").includePaths;
-// var rebbot          = require("bootstrap").includePaths;
+const normalize       = require("sassy-normalize").includePaths;
+const reboot          = require("bootstrap-reboot-import").includePaths;
+// const reboot          = path.join(__dirname, 'node_modules/bootstrap/scss/bootstrap-reboot');
 
 /* configuration */
 const PATH = {
@@ -65,7 +64,7 @@ gulp.task('cssTask', function () {
   return gulp.src(PATH.css.src)
   .pipe(gulpif(!args.production, sourcemaps.init()))
   .pipe(sass(
-    { includePaths: [bourbon, animate] }
+    { includePaths: [bourbon, animate, normalize, reboot] }
   ).on('error', sass.logError))
   .pipe(autoprefixer({
       browsers: ['last 3 versions'],
