@@ -16,10 +16,10 @@ $color-primary   : $color-blue;
 $color-background: $color-grey-dark;
 
 $color-foreground: $color-light;
-$color-font: $color-grey-median;
+$color-font      : $color-grey-median;
 
 $color-foreground-accent: $color-primary;
-$color-font-accent: $color-light;
+$color-font-accent      : $color-light;
 
 $color-accent: $color-primary;
 
@@ -31,12 +31,7 @@ $color-info   : skyblue;
     ------------------------------------------------------------------------- */
 
 $font-path: "../fonts/";
-$font-formats: (
-    "eot",
-    "woff2",
-    "woff",
-    "svg"
-);
+$font-formats: ("eot", "woff2", "woff", "svg");
 
 @font-face {
   font-family: 'icomoon';
@@ -75,4 +70,11 @@ $easings: (
     "step-start"   : step-start,
     "step-end"     : step-end,
     "easeInOutBack": cubic-bezier(0.68, -0.55, 0.265, 1.55),
+)
+$animation-duration: .3ms;
+$animation-easing  : mapget($easings, "ease-in-out");
+
+$animations: (
+    "duration": $animation-duration,
+    "easing"  : $animation-easing,
 );

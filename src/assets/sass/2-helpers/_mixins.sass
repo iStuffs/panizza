@@ -2,3 +2,13 @@
     ========================================================================= */
 
 @import 'bourbon'
+
+@mixin transition($properties: all)
+    @if (is-map($properties))
+        @each $property in $properties
+            @include transition-single($property)
+    @else
+            @include transition-single($properties)
+
+@mixin transition-single($property)
+    transition: $property $duration $easing
