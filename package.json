@@ -19,6 +19,26 @@
     "panini": "^1.6.2"
   },
   "dependencies": {
-    "normalize.css": "^8.0.0"
-  } 
+    "animate.css": "^3.6.1",
+    "bootstrap": "^4.1.1",
+    "bourbon": "^5.0.1",
+    "sassy-normalize": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iStuffs/panizza.git"
+  },
+  "keywords": [
+    "scalford",
+    "starter",
+    "kit",
+    "gulp",
+    "panini",
+    "front-end",
+    "developement"
+  ],
+  "bugs": {
+    "url": "https://github.com/iStuffs/panizza/issues"
+  },
+  "homepage": "https://github.com/iStuffs/panizza#readme"
 }

@@ -7,6 +7,9 @@ var args            = require('yargs').argv;
 var autoprefixer    = require('gulp-autoprefixer');
 var notify          = require("gulp-notify");
 var sourcemaps      = require('gulp-sourcemaps');
+var bourbon         = require("bourbon").includePaths;
+// var normalize       = require("sassy-normalize").includePaths;
+// var rebbot          = require("bootstrap").includePaths;
 
 /* configuration */
 var PATH = {
@@ -56,7 +59,9 @@ gulp.task('panini:refresh', function(done) {
 gulp.task('cssTask', function () {
   return gulp.src(PATH.css.src)
   .pipe(gulpif(!args.production, sourcemaps.init()))
-  .pipe(sass().on('error', sass.logError))
+  .pipe(sass(
+    { includePaths: [bourbon, normalize] }
+  ).on('error', sass.logError))
   .pipe(autoprefixer({
       browsers: ['last 3 versions'],
       cascade: false
