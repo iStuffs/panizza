@@ -1,18 +1,23 @@
-var gulp            = require('gulp');
-var panini          = require('panini');
-var gulpif          = require('gulp-if');
-var sass            = require('gulp-sass');
-var cssMinification = require('gulp-clean-css');
-var args            = require('yargs').argv;
-var autoprefixer    = require('gulp-autoprefixer');
-var notify          = require("gulp-notify");
-var sourcemaps      = require('gulp-sourcemaps');
-var bourbon         = require("bourbon").includePaths;
+const gulp            = require('gulp');
+const panini          = require('panini');
+const gulpif          = require('gulp-if');
+const sass            = require('gulp-sass');
+const cssMinification = require('gulp-clean-css');
+const args            = require('yargs').argv;
+const autoprefixer    = require('gulp-autoprefixer');
+const notify          = require("gulp-notify");
+const sourcemaps      = require('gulp-sourcemaps');
+
+const path            = require('path');
+const bourbon         = require("bourbon").includePaths;
+const animate         = path.join(__dirname, 'node_modules/animate.css/source');
+// var animate         = require("animate.css").includePaths;
+
 // var normalize       = require("sassy-normalize").includePaths;
 // var rebbot          = require("bootstrap").includePaths;
 
 /* configuration */
-var PATH = {
+const PATH = {
   src: 'src/',
   dist: './dist/',
 };
@@ -60,7 +65,7 @@ gulp.task('cssTask', function () {
   return gulp.src(PATH.css.src)
   .pipe(gulpif(!args.production, sourcemaps.init()))
   .pipe(sass(
-    { includePaths: [bourbon, normalize] }
+    { includePaths: [bourbon, animate] }
   ).on('error', sass.logError))
   .pipe(autoprefixer({
       browsers: ['last 3 versions'],

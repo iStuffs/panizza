@@ -70,7 +70,7 @@ $easings: (
     "step-start"   : step-start,
     "step-end"     : step-end,
     "easeInOutBack": cubic-bezier(0.68, -0.55, 0.265, 1.55),
-)
+);
 $animation-duration: .3ms;
 $animation-easing  : mapget($easings, "ease-in-out");
 

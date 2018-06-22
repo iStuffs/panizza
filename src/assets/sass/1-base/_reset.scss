@@ -3,4 +3,12 @@
 
 // @import '../../../../node_modules/bootstrap/scss/bootstrap-reboot'
 // @import '../../../../node_modules/sassy-normalize/normalize'
-@import 'normalize'
+// @import 'normalize';
+
+html{
+    width      : 100%;
+    min-height : 100%;
+    overflow   : hidden;
+    font-size  : 62.5%;
+    font-size  : calc(1em * .625); /* fix */
+}
