@@ -12,15 +12,20 @@ const panini          = require('panini');
 // ENV & argumenst handeling
 const gulpif          = require('gulp-if');
 const args            = require('yargs').argv;
+const sourcemaps      = require('gulp-sourcemaps');
 
 // Sass
 const sass            = require('gulp-sass');
 const cssMinification = require('gulp-clean-css');
 const autoprefixer    = require('gulp-autoprefixer');
-const sourcemaps      = require('gulp-sourcemaps');
+
+// JavaScript
+const babel           = require('gulp-babel');
+const uglify          = require('gulp-uglify');
 
 // Error handeling
-// const notify          = require("gulp-notify");
+const notify          = require("gulp-notify");
+const plumber         = require('gulp-plumber');
 
 // browser refresh
 const browser         = require('browser-sync');
@@ -41,7 +46,7 @@ const reboot          = require("bootstrap-reboot-import").includePaths;
 
 // App paths
 const PATH = {
-  src: 'src/',
+  src:  'src/',
   dist: './dist/',
 };
 
@@ -63,8 +68,8 @@ PATH.css = {
 
 // JavaScript paths
 PATH.js = {
-  src:      PATH.src + 'assets/script/**/*.js',
-  dest:     PATH.src + 'js/'
+  src:      PATH.src + 'assets/js/**/*.js',
+  dest:     PATH.dist + 'js/'
 }
 
 
@@ -108,6 +113,17 @@ gulp.task('cssTask', function () {
 });
 
 
+/* JavaScript
+   ========== */
+
+gulp.task('jsTask', () => {
+    return gulp.src(PATH.js.src)
+        .pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
+        .pipe(babel({ presets: ['env'] }))
+        .pipe(gulpif(args.production, uglify()))
+        .pipe(gulp.dest(PATH.js.dest));
+});
+
 /* Browser reload
    ============== */
 
@@ -130,11 +146,13 @@ gulp.task('cleanDist', (done) => {
 /* Watching
    ======== */
 
-gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
-    gulp.watch('./src/assets/sass/**/*.{sass, scss}', ['cssTask']);
-    gulp.watch( 'src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
-    gulp.watch('./dist/*.html').on('change', browser.reload);
-    gulp.watch('./dist/css/*.css').on('change', browser.reload);
+gulp.task('watch', ['cssTask', 'jsTask', 'panini', 'refresh'], function() {
+    gulp.watch(PATH.css.src, ['cssTask']);
+    gulp.watch(PATH.js.src,  ['jsTask']);
+    gulp.watch('src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
+    gulp.watch(PATH.dist     + '*.html').on('change', browser.reload);
+    gulp.watch(PATH.dist.css + '*.css') .on('change', browser.reload);
+    gulp.watch(PATH.dist.js  + '*.js')  .on('change', browser.reload);
 });
 
 
@@ -142,4 +160,4 @@ gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
    =================== */
 
 gulp.task('default', ['watch']);
-gulp.task('clear', ['cleanDist']);
+gulp.task('clear',   ['cleanDist']);
