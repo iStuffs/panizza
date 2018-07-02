@@ -1,30 +1,51 @@
 'use strict';
 
+/* Imports npm modules
+   =================== */
+
+// General
 const gulp            = require('gulp');
+
+// Panini templating
 const panini          = require('panini');
+
+// ENV & argumenst handeling
 const gulpif          = require('gulp-if');
+const args            = require('yargs').argv;
+
+// Sass
 const sass            = require('gulp-sass');
 const cssMinification = require('gulp-clean-css');
-const args            = require('yargs').argv;
 const autoprefixer    = require('gulp-autoprefixer');
-const notify          = require("gulp-notify");
 const sourcemaps      = require('gulp-sourcemaps');
+
+// Error handeling
+// const notify          = require("gulp-notify");
+
+// browser refresh
 const browser         = require('browser-sync');
+
+// clear
 const rm              = require('rimraf');
 
-
+// Include scss library's paths
 const path            = require('path');
 const bourbon         = require("bourbon").includePaths;
 const animate         = path.join(__dirname, 'node_modules/animate.css/source');
 const normalize       = require("sassy-normalize").includePaths;
 const reboot          = require("bootstrap-reboot-import").includePaths;
 
-/* Paths Configuration */
+
+/* Paths Configuration
+   =================== */
+
+// App paths
 const PATH = {
   src: 'src/',
   dist: './dist/',
 };
 
+// Panini paths
 PATH.panini = {
   src:      PATH.src + 'pages/**/*.html',
   root:     PATH.src + 'pages/',
@@ -34,17 +55,22 @@ PATH.panini = {
   data:     PATH.src + 'data/',
 }
 
+// CSS paths
 PATH.css = {
   src:      PATH.src  + 'assets/sass/**/*.{sass,scss}',
   dest:     PATH.dist + 'css/'
 }
 
+// JavaScript paths
 PATH.js = {
   src:      PATH.src + 'assets/script/**/*.js',
   dest:     PATH.src + 'js/'
 }
 
-/* Panini templating */
+
+/* Panini templating
+   ================= */
+
 gulp.task('panini', function() {
   return gulp.src(PATH.panini.src)
     .pipe(panini({
@@ -57,13 +83,15 @@ gulp.task('panini', function() {
     .pipe(gulp.dest('dist'));
 });
 
-
 gulp.task('panini:refresh', function(done) {
   panini.refresh();
   done();
 });
 
-/* CSS */
+
+/* Css
+   ==== */
+
 gulp.task('cssTask', function () {
   return gulp.src(PATH.css.src)
   .pipe(gulpif(!args.production, sourcemaps.init()))
@@ -79,7 +107,10 @@ gulp.task('cssTask', function () {
   .pipe(gulp.dest(PATH.css.dest));
 });
 
-/* Browser reload */
+
+/* Browser reload
+   ============== */
+
 gulp.task('refresh', () => {
     browser.init({
         server: {
@@ -89,12 +120,16 @@ gulp.task('refresh', () => {
     });
 });
 
-/* Clear dist folder */
+/* Clear dist folder
+   ================= */
 gulp.task('cleanDist', (done) => {
     rm('./dist/', done);
 });
 
-/* Watching */
+
+/* Watching
+   ======== */
+
 gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
     gulp.watch('./src/assets/sass/**/*.{sass, scss}', ['cssTask']);
     gulp.watch( 'src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
@@ -102,6 +137,9 @@ gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
     gulp.watch('./dist/css/*.css').on('change', browser.reload);
 });
 
-gulp.task('default', ['watch']);
 
+/* Cli & Default tasks
+   =================== */
+
+gulp.task('default', ['watch']);
 gulp.task('clear', ['cleanDist']);
