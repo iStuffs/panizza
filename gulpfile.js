@@ -10,6 +10,8 @@ const autoprefixer    = require('gulp-autoprefixer');
 const notify          = require("gulp-notify");
 const sourcemaps      = require('gulp-sourcemaps');
 const browser         = require('browser-sync');
+const rm              = require('rimraf');
+
 
 const path            = require('path');
 const bourbon         = require("bourbon").includePaths;
@@ -17,7 +19,7 @@ const animate         = path.join(__dirname, 'node_modules/animate.css/source');
 const normalize       = require("sassy-normalize").includePaths;
 const reboot          = require("bootstrap-reboot-import").includePaths;
 
-/* configuration */
+/* Paths Configuration */
 const PATH = {
   src: 'src/',
   dist: './dist/',
@@ -42,7 +44,7 @@ PATH.js = {
   dest:     PATH.src + 'js/'
 }
 
-/* panini templating */
+/* Panini templating */
 gulp.task('panini', function() {
   return gulp.src(PATH.panini.src)
     .pipe(panini({
@@ -87,7 +89,12 @@ gulp.task('refresh', () => {
     });
 });
 
-/* watching */
+/* Clear dist folder */
+gulp.task('cleanDist', (done) => {
+    rm('./dist/', done);
+});
+
+/* Watching */
 gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
     gulp.watch('./src/assets/sass/**/*.{sass, scss}', ['cssTask']);
     gulp.watch( 'src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
@@ -96,3 +103,5 @@ gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
 });
 
 gulp.task('default', ['watch']);
+
+gulp.task('clear', ['cleanDist']);

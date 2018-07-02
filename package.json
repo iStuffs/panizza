@@ -17,7 +17,8 @@
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.0",
     "gulp-sass": "^4.0.1",
-    "panini": "^1.6.2"
+    "panini": "^1.6.2",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "animate.css": "github:daneden/animate.css#sass",
