@@ -99,6 +99,7 @@ gulp.task('panini:refresh', function(done) {
 
 gulp.task('cssTask', function () {
   return gulp.src(PATH.css.src)
+  .pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
   .pipe(gulpif(!args.production, sourcemaps.init()))
   .pipe(sass(
     { includePaths: [bourbon, animate, normalize, reboot] }
@@ -107,7 +108,7 @@ gulp.task('cssTask', function () {
       browsers: ['last 3 versions'],
       cascade: false
   }))
-  .pipe(gulpif(!!args.production, cssMinification({compatibility: 'ie9'})))
+  .pipe(gulpif( args.production, cssMinification({compatibility: 'ie9'})))
   .pipe(gulpif(!args.production, sourcemaps.write('.')))
   .pipe(gulp.dest(PATH.css.dest));
 });
@@ -119,8 +120,10 @@ gulp.task('cssTask', function () {
 gulp.task('jsTask', () => {
     return gulp.src(PATH.js.src)
         .pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
+        .pipe(gulpif(!args.production, sourcemaps.init()))
         .pipe(babel({ presets: ['env'] }))
         .pipe(gulpif(args.production, uglify()))
+        .pipe(gulpif(!args.production, sourcemaps.write('.')))
         .pipe(gulp.dest(PATH.js.dest));
 });
 
@@ -160,4 +163,7 @@ gulp.task('watch', ['cssTask', 'jsTask', 'panini', 'refresh'], function() {
    =================== */
 
 gulp.task('default', ['watch']);
+gulp.task('build', ['cleanDist'], function(){
+    gulp.run(['cssTask', 'jsTask', 'panini']);
+});
 gulp.task('clear',   ['cleanDist']);

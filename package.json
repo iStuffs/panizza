@@ -4,7 +4,8 @@
   "description": "zurb panini + a little pizza flavor",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "build": "gulp build --production"
   },
   "author": "iStuffs - Samuel DIDIER-LAURENT",
   "license": "ISC",
