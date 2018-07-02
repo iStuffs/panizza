@@ -74,8 +74,7 @@ gulp.task('cssTask', function () {
   }))
   .pipe(gulpif(!!args.production, cssMinification({compatibility: 'ie9'})))
   .pipe(gulpif(!args.production, sourcemaps.write('.')))
-  // .pipe(gulp.dest(PATH.css.dist));
-  .pipe(gulp.dest('./dist/css/'));
+  .pipe(gulp.dest(PATH.css.dest));
 });
 
 /* Browser reload */
@@ -87,8 +86,8 @@ gulp.task('refresh', () => {
         port: '8080',
     });
 });
-/* watching */
 
+/* watching */
 gulp.task('watch', ['cssTask', 'panini', 'refresh'], function() {
     gulp.watch('./src/assets/sass/**/*.{sass, scss}', ['cssTask']);
     gulp.watch( 'src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
