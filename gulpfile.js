@@ -152,7 +152,7 @@ gulp.task('cleanDist', (done) => {
 gulp.task('watch', ['cssTask', 'jsTask', 'panini', 'refresh'], function() {
     gulp.watch(PATH.css.src, ['cssTask']);
     gulp.watch(PATH.js.src,  ['jsTask']);
-    gulp.watch('src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars}', ['panini:refresh', 'panini']);
+    gulp.watch('src/{layouts,pages,partials,helpers,data}/**/*.{html,hbs,handlebars,json,yml}', ['panini:refresh', 'panini']);
     gulp.watch(PATH.dist     + '*.html').on('change', browser.reload);
     gulp.watch(PATH.dist.css + '*.css') .on('change', browser.reload);
     gulp.watch(PATH.dist.js  + '*.js')  .on('change', browser.reload);
