@@ -6,7 +6,7 @@
         @each $property in $properties
             @include transition-single($property)
     @else
-            @include transition-single($properties)
+        @include transition-single($properties)
 
 @mixin transition-single($property)
     transition: $property $duration $easing

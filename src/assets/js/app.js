@@ -1,2 +1,2 @@
-const message = "Hello panizza";
-console.log(message);
+const message = 'Hello panizza';
+window.console.log(message);
