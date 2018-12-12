@@ -69,9 +69,9 @@ gulp.task('cssTask', function () {
 
 /* watching */
 
-gulp.task('watch', ['cssTask', 'panini'], function() {
-  gulp.watch('./src/assets/sass/**/*.{sass,scss}', ['cssTask']);
-  gulp.watch( 'src/{layouts,partials,helpers,data}/**/*', ['panini:refresh', 'panini']);
-});
+gulp.task('watch', gulp.series('cssTask', 'panini', function() {
+  gulp.watch('./src/assets/sass/**/*.{sass,scss}', gulp.series('cssTask'));
+  gulp.watch('src/{layouts,partials,helpers,data}/**/*', gulp.series('panini:refresh', 'panini'));
+}));
 
-gulp.task('default', ['watch']);
+gulp.task('default', gulp.series('watch'));

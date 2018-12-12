@@ -4,18 +4,18 @@
   "description": "zurb panini + a little pizza flavor",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp"
   },
   "author": "iStuffs - Samuel DIDIER-LAURENT",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.9.4",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean-css": "^4.0.0",
     "gulp-if": "^2.0.2",
     "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
-    "gulp-sass": "^4.0.1",
-    "panini": "^1.6.2"
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
+    "panini": "^1.6.3"
   }
 }
