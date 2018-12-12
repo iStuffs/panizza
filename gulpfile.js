@@ -1,15 +1,15 @@
-var gulp            = require('gulp');
-var panini          = require('panini');
-var gulpif          = require('gulp-if');
-var sass            = require('gulp-sass');
-var cssMinification = require('gulp-clean-css');
-var args            = require('yargs').argv;
-var autoprefixer    = require('gulp-autoprefixer');
-var notify          = require("gulp-notify");
-var sourcemaps      = require('gulp-sourcemaps');
+const gulp            = require('gulp');
+const panini          = require('panini');
+const gulpif          = require('gulp-if');
+const sass            = require('gulp-sass');
+const cssMinification = require('gulp-clean-css');
+const args            = require('yargs').argv;
+const autoprefixer    = require('gulp-autoprefixer');
+const notify          = require("gulp-notify");
+const sourcemaps      = require('gulp-sourcemaps');
 
 /* configuration */
-var PATH = {
+const PATH = {
   src: 'src/',
   dist: './dist/',
 };
@@ -34,7 +34,7 @@ PATH.js = {
 }
 
 /* panini templating */
-gulp.task('panini', function() {
+gulp.task('panini', () => {
   return gulp.src(PATH.panini.src)
     .pipe(panini({
       root:     PATH.panini.root,
@@ -47,13 +47,13 @@ gulp.task('panini', function() {
 });
 
 
-gulp.task('panini:refresh', function(done) {
+gulp.task('panini:refresh', (done) =>{
   panini.refresh();
   done();
 });
 
 /* CSS */
-gulp.task('cssTask', function () {
+gulp.task('cssTask', () => {
   return gulp.src(PATH.css.src)
   .pipe(gulpif(!args.production, sourcemaps.init()))
   .pipe(sass().on('error', sass.logError))
@@ -69,7 +69,7 @@ gulp.task('cssTask', function () {
 
 /* watching */
 
-gulp.task('watch', gulp.series('cssTask', 'panini', function() {
+gulp.task('watch', gulp.series('cssTask', 'panini', () => {
   gulp.watch('./src/assets/sass/**/*.{sass,scss}', gulp.series('cssTask'));
   gulp.watch('src/{layouts,partials,helpers,data}/**/*', gulp.series('panini:refresh', 'panini'));
 }));
