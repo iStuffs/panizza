@@ -1,16 +1,14 @@
-const gulp            = require('gulp');
-const panini          = require('panini');
-const gulpif          = require('gulp-if');
-const sass            = require('gulp-sass');
-const cssMinification = require('gulp-clean-css');
-const args            = require('yargs').argv;
-const autoprefixer    = require('gulp-autoprefixer');
-const notify          = require("gulp-notify");
-const sourcemaps      = require('gulp-sourcemaps');
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins');
+const panini = require('panini');
+const args = require('yargs').argv;
 
+/* Plugins */
+// { autoprefixer, cleanCss, if, notify, plumber, sass, sourcemaps }
+const $ = plugins();
 
 /* configuration */
-const { PATH } = require('./config.json');
+const { PATH, COMPATIBILITY } = require('./config.json');
 const production = !!args.production;
 
 /* panini templating */
@@ -34,20 +32,22 @@ gulp.task('panini:refresh', (done) =>{
 /* CSS */
 gulp.task('cssTask', () => {
   return gulp.src(PATH.css.src)
-  .pipe(gulpif(!production, sourcemaps.init()))
-  .pipe(sass().on('error', sass.logError))
-  .pipe(autoprefixer({
-      browsers: ['last 3 versions'],
-      cascade: false
+  .pipe($.plumber({ errorHandler: $.notify.onError('Error: <%= error.message %>') }))
+  .pipe($.if(!production, $.sourcemaps.init()))
+  .pipe($.sassGlob())
+  .pipe($.sass().on('error', $.sass.logError))
+  .pipe($.autoprefixer({
+    browsers: COMPATIBILITY,
+    cascade: false
   }))
-  .pipe(gulpif(production, cssMinification({compatibility: 'ie9'})))
-  .pipe(gulpif(!production, sourcemaps.write('.')))
+  .pipe($.if(production, $.cleanCss({compatibility: 'ie11'})))
+  .pipe($.if(!production, $.sourcemaps.write('.')))
   .pipe(gulp.dest(PATH.css.dest));
 });
 
 /* watching */
 gulp.task('watch', gulp.series('cssTask', 'panini', () => {
-  gulp.watch('./src/assets/sass/**/*.{sass,scss}', gulp.series('cssTask'));
+  gulp.watch('PATH.css.src', gulp.series('cssTask'));
   gulp.watch('src/{layouts,partials,helpers,data}/**/*', gulp.series('panini:refresh', 'panini'));
 }));
 

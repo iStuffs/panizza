@@ -1,24 +1,27 @@
 {
-    "PATH": {
-        "src": "src/",
-        "dest": "./dist/",
-        "panini": {
-                "src": "src/pages/**/*.html",
-                "root": "src/pages/",
-                "layouts": "src/layouts/",
-                "partials": "src/partials/",
-                "helpers": "src/helpers/",
-                "data": "src/data/"
-        },
-        "css": {
-            "src": "src/assets/sass/**/*.{sass,scss}",
-            "dest": "./dist/css/"
-        },
-        "js": {
-            "src": "src/assets/script/**/*.js",
-            "dest": "./dist/js/"
-        }
+  "PATH": {
+    "src": "src/",
+    "dest": "./dist/",
+    "panini": {
+      "src": "src/pages/**/*.html",
+      "root": "src/pages/",
+      "layouts": "src/layouts/",
+      "partials": "src/partials/",
+      "helpers": "src/helpers/",
+      "data": "src/data/"
+    },
+    "css": {
+      "src": "./src/assets/sass/**/*.{sass,scss}",
+      "dest": "./dist/css/"
+    },
+    "js": {
+      "src": "./src/assets/script/**/*.js",
+      "dest": "./dist/js/"
     }
+  },
+  "COMPATIBILITY": [
+    "last 3 versions",
+    "ie >= 11",
+    "ios >= 10"
+  ]
 }
-
-
