@@ -38,6 +38,7 @@ function html() {
   return gulp
     .src(PATH.src + HTML.entries)
     .pipe(panini(HTML.paniniOptions))
+    .pipe($.if(production, $.htmlmin({ collapseWhitespace: true })))
     .pipe(gulp.dest(PATH.dest + HTML.dest));
 }
 
@@ -119,7 +120,6 @@ function images() {
 function copy() {
   return gulp
     .src(PATH.src + ASSETS.src)
-
     .pipe(gulp.dest(PATH.dest + ASSETS.dest)); // JSON (.json) and fonts (*.{eot,otf,svg,ttf,woff,woff2})
 }
 
