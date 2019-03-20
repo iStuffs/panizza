@@ -11,7 +11,7 @@ const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 
 /* Plugins */
-// { autoprefixer, cleanCss, if, notify, plumber, sass, sourcemaps, uglify }
+// { autoprefixer, cleanCss, htmlmin, if, imagemin, notify, plumber, sass, sassGlob, sourcemaps, uglify }
 const $ = plugins();
 
 /* configuration */
@@ -28,23 +28,11 @@ const {
 } = require("./config.json");
 const production = !!args.production;
 
-/* helper functions */
-function clean(done) {
-  rm(PATH.dest, done);
-}
-
-/* HTML */
-function html() {
+/* ASSETS - json and fonts*/
+function assets() {
   return gulp
-    .src(PATH.src + HTML.entries)
-    .pipe(panini(HTML.paniniOptions))
-    .pipe($.if(production, $.htmlmin({ collapseWhitespace: true })))
-    .pipe(gulp.dest(PATH.dest + HTML.dest));
-}
-
-function paniniRefresh(done) {
-  panini.refresh();
-  done();
+    .src(PATH.src + ASSETS.src)
+    .pipe(gulp.dest(PATH.dest + ASSETS.dest)); // JSON (.json) and fonts (*.{eot,otf,svg,ttf,woff,woff2})
 }
 
 /* CSS */
@@ -68,6 +56,29 @@ function css() {
     .pipe($.if(production, $.cleanCss({ compatibility: "ie11" })))
     .pipe($.if(!production, $.sourcemaps.write(".")))
     .pipe(gulp.dest(PATH.dest + CSS.dest));
+}
+
+/* HTML */
+function html() {
+  return gulp
+    .src(PATH.src + HTML.entries)
+    .pipe($.plumber({ errorHandler: $.notify.onError(ERROR) }))
+    .pipe(panini(HTML.paniniOptions))
+    .pipe($.if(production, $.htmlmin({ collapseWhitespace: true })))
+    .pipe(gulp.dest(PATH.dest + HTML.dest));
+}
+
+function paniniRefresh(done) {
+  panini.refresh();
+  done();
+}
+
+/* IMAGES */
+function images() {
+  return gulp
+    .src(PATH.src + IMAGES.src)
+    .pipe($.imagemin())
+    .pipe(gulp.dest(PATH.dest + IMAGES.dest));
 }
 
 /* JS */
@@ -96,11 +107,7 @@ function js() {
   return gulp
     .src(PATH.src + JS.entries)
     .pipe(named())
-    .pipe(
-      $.plumber({
-        errorHandler: $.notify.onError(ERROR)
-      })
-    )
+    .pipe($.plumber({ errorHandler: $.notify.onError(ERROR) }))
     .pipe($.if(!production, $.sourcemaps.init()))
     .pipe(webpackStream(webpackConfig, webpack))
     .pipe($.if(production, $.uglify()))
@@ -108,30 +115,20 @@ function js() {
     .pipe(gulp.dest(PATH.dest + JS.dest));
 }
 
-/* ASSETS - json and fonts*/
-function images() {
-  return gulp
-    .src(PATH.src + IMAGES.src)
-    .pipe($.imagemin())
-    .pipe(gulp.dest(PATH.dest + IMAGES.dest));
-}
-
-/* ASSETS - json and fonts*/
-function copy() {
-  return gulp
-    .src(PATH.src + ASSETS.src)
-    .pipe(gulp.dest(PATH.dest + ASSETS.dest)); // JSON (.json) and fonts (*.{eot,otf,svg,ttf,woff,woff2})
-}
-
+/* OTHERS FUNCTIONS */
+// Browser Reload
 function browserReload(done) {
   browserSync.reload();
   done();
 }
 
+// Clean - Clean destination directory
+function clean(done) {
+  rm(PATH.dest, done);
+}
+
 /* Build */
-gulp.task(
-  "build",
-  gulp.series(clean, copy, css, js, images, html));
+gulp.task("build", gulp.series(clean, assets, css, js, images, html));
 
 /* Serve */
 gulp.task("serve", done => {
@@ -148,22 +145,26 @@ gulp.task("serve", done => {
 gulp.task(
   "watch",
   gulp.series("build", "serve", () => {
-    // watch files
+    // assets
     gulp
-      .watch(PATH.src + IMAGES.src, gulp.series(images))
+      .watch(PATH.src + ASSETS.src, gulp.series(assets))
       .on("all", gulp.series(browserReload));
-    gulp
-      .watch(PATH.src + JS.src, gulp.series(js))
-      .on("all", gulp.series(browserReload));
+    // css
     gulp
       .watch(PATH.src + CSS.src, gulp.series(css))
       .on("all", gulp.series(browserReload));
-    gulp
-      .watch(PATH.src + ASSETS.src, gulp.series(copy))
-      .on("all", gulp.series(browserReload));
+    // html
     gulp
       .watch(PATH.src + HTML.src)
       .on("all", gulp.series(paniniRefresh, html, browserReload));
+    // images
+    gulp
+      .watch(PATH.src + IMAGES.src, gulp.series(images))
+      .on("all", gulp.series(browserReload));
+    // javascript
+    gulp
+      .watch(PATH.src + JS.src, gulp.series(js))
+      .on("all", gulp.series(browserReload));
   })
 );
 
