@@ -10,8 +10,8 @@
   "author": "iStuffs - Samuel DIDIER-LAURENT",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.5.0",
+    "@babel/preset-env": "^7.5.2",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "eyeglass": "^2.4.1",
@@ -21,17 +21,17 @@
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^6.0.0",
-    "gulp-load-plugins": "^1.6.0",
+    "gulp-load-plugins": "^2.0.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
-    "gulp-sass-glob": "^1.0.9",
+    "gulp-sass-glob": "^1.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "panini": "^1.6.3",
     "rimraf": "^2.6.3",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.33.0",
+    "webpack": "^4.35.3",
     "webpack-stream": "^5.2.1"
   }
 }
