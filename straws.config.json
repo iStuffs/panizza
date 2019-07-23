@@ -1,0 +1,5 @@
+{
+  "ARCHIVE": {
+    "src": "dist/assets/*"
+  }
+}

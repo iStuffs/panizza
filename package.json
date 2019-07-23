@@ -1,11 +1,12 @@
 {
-  "name": "pinizza",
+  "name": "panizza",
   "version": "0.0.2",
   "description": "zurb panini + a little pizza flavor",
   "main": "index.js",
   "scripts": {
     "start": "gulp",
-    "build": "gulp --production"
+    "build": "gulp --production",
+    "archive": "gulp archive"
   },
   "author": "iStuffs - Samuel DIDIER-LAURENT",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "gulp-uglify": "^3.0.2",
     "panini": "^1.6.3",
     "rimraf": "^2.6.3",
+    "straws": "git+https://github.com/futhark-project/straws.git",
     "vinyl-named": "^1.1.0",
     "webpack": "^4.35.3",
     "webpack-stream": "^5.2.1"

@@ -10,6 +10,12 @@ const rm = require("rimraf");
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 
+const { archive } = require("straws")
+const configArchive = {
+  src: './src/pages'
+}
+// const archiveTask = gulp.series(archive())
+
 /* Plugins */
 // { autoprefixer, cleanCss, htmlmin, if, imagemin, notify, plumber, sass, sassGlob, sourcemaps, uglify }
 const $ = plugins();
@@ -115,56 +121,60 @@ function js() {
 
 /* OTHERS FUNCTIONS */
 // Browser Reload
-function browserReload(done) {
-  browserSync.reload();
-  done();
-}
+// function browserReload(done) {
+//   browserSync.reload();
+//   done();
+// }
 
 // Clean - Clean destination directory
-function clean(done) {
-  rm(PATH.dest, done);
-}
+// function clean(done) {
+//   rm(PATH.dest, done);
+// }
 
 /* Build */
-gulp.task("build", gulp.series(clean, assets, css, js, images, html));
+// gulp.task("build", gulp.series(clean, assets, css, js, images, html));
 
 /* Serve */
-gulp.task("serve", done => {
-  browserSync.init({
-    server: {
-      baseDir: SERVER.root
-    },
-    port: SERVER.port
-  });
-  done();
-});
+// gulp.task("serve", done => {
+//   browserSync.init({
+//     server: {
+//       baseDir: SERVER.root
+//     },
+//     port: SERVER.port
+//   });
+//   done();
+// });
+
 
 /* Watching */
-gulp.task(
-  "watch",
-  gulp.series("build", "serve", () => {
-    // assets
-    gulp
-      .watch(PATH.src + ASSETS.src, gulp.series(assets))
-      .on("all", gulp.series(browserReload));
-    // css
-    gulp
-      .watch(PATH.src + CSS.src, gulp.series(css))
-      .on("all", gulp.series(browserReload));
-    // html
-    gulp
-      .watch(PATH.src + HTML.src)
-      .on("all", gulp.series(paniniRefresh, html, browserReload));
-    // images
-    gulp
-      .watch(PATH.src + IMAGES.src, gulp.series(images))
-      .on("all", gulp.series(browserReload));
-    // javascript
-    gulp
-      .watch(PATH.src + JS.src, gulp.series(js))
-      .on("all", gulp.series(browserReload));
-  })
-);
+// gulp.task(
+//   "watch",
+//   gulp.series("build", "serve", () => {
+//     // assets
+//     gulp
+//       .watch(PATH.src + ASSETS.src, gulp.series(assets))
+//       .on("all", gulp.series(browserReload));
+//     // css
+//     gulp
+//       .watch(PATH.src + CSS.src, gulp.series(css))
+//       .on("all", gulp.series(browserReload));
+//     // html
+//     gulp
+//       .watch(PATH.src + HTML.src)
+//       .on("all", gulp.series(paniniRefresh, html, browserReload));
+//     // images
+//     gulp
+//       .watch(PATH.src + IMAGES.src, gulp.series(images))
+//       .on("all", gulp.series(browserReload));
+//     // javascript
+//     gulp
+//       .watch(PATH.src + JS.src, gulp.series(js))
+//       .on("all", gulp.series(browserReload));
+//   })
+// );
 
 /* Default Task */
-gulp.task("default", production ? gulp.series("build") : gulp.series("watch"));
+// gulp.task("default", production ? gulp.series("build") : gulp.series("watch"));
+
+exports.archive = archive
+  // default: production ? gulp.series("build") : gulp.series("watch"),
