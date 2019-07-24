@@ -7,11 +7,10 @@ const {
   clean,
   config,
   css,
-  htmlPanini,
+  panini,
   images,
   js,
   modeArg,
-  paniniRefresh,
   serve,
  } = require('straws')
 
@@ -19,9 +18,9 @@ const {
 const {
   ASSETS,
   CSS,
-  HTML,
   IMAGES,
   JS,
+  PANINI,
   PATH,
 } = config
 
@@ -29,7 +28,7 @@ const production = modeArg
 
 
 /* Build */
-const build = series(clean, parallel(assets, css, js, images, htmlPanini));
+const build = series(clean, parallel(assets, css, js, images, panini.html));
 
 /* Watching */
 const watcher = series(build, serve.init, () => {
@@ -40,8 +39,8 @@ const watcher = series(build, serve.init, () => {
     watch(PATH.src + CSS.src, series(css))
       .on("all", series(serve.reload));
     // html
-    watch(PATH.src + HTML.src)
-      .on("all", series(paniniRefresh, htmlPanini, serve.reload));
+    watch(PATH.src + PANINI.src)
+      .on("all", series(panini.refresh, panini.html, serve.reload));
     // images
     watch(PATH.src + IMAGES.src, series(images))
       .on("all", series(serve.reload));
