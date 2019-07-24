@@ -1,5 +1,7 @@
 {
-  "ARCHIVE": {
-    "src": "dist/assets/*"
+  "JS": {
+    "entries": "assets/js/app.js",
+    "src": "assets/js/**/*.js",
+    "dest": ""
   }
 }
