@@ -30,10 +30,10 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "panini": "^1.6.3",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "straws": "git+https://github.com/futhark-project/straws.git",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.39.1",
+    "webpack": "^4.39.2",
     "webpack-stream": "^5.2.1"
   }
 }
