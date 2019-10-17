@@ -11,17 +11,17 @@
   "author": "iStuffs - Samuel DIDIER-LAURENT",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "eyeglass": "^2.4.1",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^6.1.0",
+    "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.2.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^3.0.0",
-    "gulp-imagemin": "^6.0.0",
+    "gulp-imagemin": "^6.1.1",
     "gulp-load-plugins": "^2.0.1",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
@@ -33,7 +33,7 @@
     "rimraf": "^3.0.0",
     "straws": "git+https://github.com/futhark-project/straws.git",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.39.2",
+    "webpack": "^4.41.2",
     "webpack-stream": "^5.2.1"
   }
 }
